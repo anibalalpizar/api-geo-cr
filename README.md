@@ -1,5 +1,3 @@
-![Diagrama del flujo de datos](docs/diagrams/diagram.png)
-
 <div align="center">
-  <img src="docs/diagrams/diagram.png" alt="Diagrama del flujo de datos">
+  <img width="85%" height="85%" src="docs/diagrams/diagram.svg" alt="Diagrama del flujo de datos">
 </div>
