@@ -1,10 +1,31 @@
-import type { Provincia } from '@/domain/provincia.entity';
 import { ProvinciaRepository } from '@/domain/provincia.repository';
+import type { Pagination } from '@/types';
+import { ResponseMessages, ResponseStatus } from '@/utils/response-status.enum';
+import { generateApiResponse } from '@/utils/response.util';
 
 export class GetAllProvinciasUseCase {
   constructor(private readonly provinciaRepository: ProvinciaRepository) {}
 
-  async execute(): Promise<Provincia[]> {
-    return this.provinciaRepository.findAll();
+  async execute(pagination: Pagination): Promise<any> {
+    const { page, limit } = pagination;
+
+    const provincias = await this.provinciaRepository.findAll();
+
+    const totalItems = provincias.length;
+    const currentPage = page;
+
+    const startIndex = (currentPage - 1) * limit;
+    const endIndex = Math.min(startIndex + limit, totalItems);
+
+    const paginatedProvincias = provincias.slice(startIndex, endIndex);
+
+    return generateApiResponse(
+      ResponseStatus.SUCCESS,
+      ResponseMessages.PROVINCIAS_FETCHED_SUCCESSFULLY,
+      paginatedProvincias,
+      currentPage,
+      limit,
+      totalItems,
+    );
   }
 }
