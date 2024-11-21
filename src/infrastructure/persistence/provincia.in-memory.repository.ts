@@ -1,6 +1,6 @@
 import type { Provincia } from '@/domain/entities';
 import { ProvinciaRepository } from '@/domain/repositories';
-import { provinciasData } from './provincia.data';
+import { provinciasData } from './data/provincia.data';
 
 export class InMemoryProvinciaRepository implements ProvinciaRepository {
   private readonly provincias: Provincia[] = provinciasData;
