@@ -1,6 +1,6 @@
-import { Injectable, Inject } from '@nestjs/common';
 import type { Provincia } from '@/domain/entities';
 import { ProvinciaRepository } from '@/domain/repositories';
+import { Inject, Injectable } from '@nestjs/common';
 
 @Injectable()
 export class GetProvinciaByIdUseCase {
