@@ -1,4 +1,4 @@
-import { ProvinciaRepository } from '@/domain/provincia.repository';
+import { ProvinciaRepository } from '@/domain/repositories';
 import type { Pagination } from '@/types';
 import { ResponseMessages, ResponseStatus } from '@/utils/response-status.enum';
 import { generateApiResponse } from '@/utils/response.util';

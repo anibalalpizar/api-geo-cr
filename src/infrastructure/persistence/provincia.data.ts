@@ -1,4 +1,4 @@
-import { Provincia } from '@/domain/provincia.entity';
+import { Provincia } from '@/domain/entities';
 
 export const provinciasData: Provincia[] = [
   Provincia.create(1, 'San José'),

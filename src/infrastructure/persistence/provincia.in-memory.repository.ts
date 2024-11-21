@@ -1,5 +1,5 @@
-import type { Provincia } from '@/domain/provincia.entity';
-import { ProvinciaRepository } from '@/domain/provincia.repository';
+import type { Provincia } from '@/domain/entities';
+import { ProvinciaRepository } from '@/domain/repositories';
 import { provinciasData } from './provincia.data';
 
 export class InMemoryProvinciaRepository implements ProvinciaRepository {

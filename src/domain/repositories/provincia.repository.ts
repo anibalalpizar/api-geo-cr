@@ -1,4 +1,4 @@
-import type { Provincia } from './provincia.entity';
+import type { Provincia } from '@/domain/entities';
 
 export interface ProvinciaRepository {
   findAll(): Promise<Provincia[]>;
