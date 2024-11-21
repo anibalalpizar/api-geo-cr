@@ -8,4 +8,6 @@ export enum ResponseMessages {
   USERS_FETCHED_SUCCESSFULLY = 'Users fetched successfully',
   ERROR_FETCHING_PROVINCIAS = 'Error fetching provincias',
   ERROR_FETCHING_USERS = 'Error fetching users',
+  CANTONES_FETCHED_SUCCESSFULLY = 'Cantones fetched successfully',
+  CANTONES_BY_PROVINCIA_FETCHED_SUCCESSFULLY = 'Cantones by provincia fetched successfully',
 }
