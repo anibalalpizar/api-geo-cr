@@ -2,9 +2,14 @@ import { ProvinciaRepository } from '@/domain/repositories';
 import type { Pagination } from '@/types';
 import { ResponseMessages, ResponseStatus } from '@/utils/response-status.enum';
 import { generateApiResponse } from '@/utils/response.util';
+import { Inject, Injectable } from '@nestjs/common';
 
+@Injectable()
 export class GetAllProvinciasUseCase {
-  constructor(private readonly provinciaRepository: ProvinciaRepository) {}
+  constructor(
+    @Inject('ProvinciaRepository')
+    private readonly provinciaRepository: ProvinciaRepository,
+  ) {}
 
   async execute(pagination: Pagination): Promise<any> {
     const { page, limit } = pagination;
