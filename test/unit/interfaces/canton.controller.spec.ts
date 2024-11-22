@@ -9,9 +9,23 @@ describe('CantonController', () => {
   let mockGetAllCantonesUseCase: jest.Mocked<GetAllCantonesUseCase>;
   let mockGetDistritosByCantonUseCase: jest.Mocked<GetDistritosByCantonUseCase>;
 
+  const mockPaginatedResponse = {
+    status: ResponseStatus.SUCCESS,
+    message: ResponseMessages.CANTONES_FETCHED_SUCCESSFULLY,
+    data: [Canton.create(101, 1, 'San José')],
+    meta: {
+      totalItems: 1,
+      itemCount: 1,
+      itemsPerPage: 7,
+      totalPages: 1,
+      currentPage: 1,
+      timestamp: expect.any(String),
+    },
+  };
+
   beforeEach(() => {
     mockGetAllCantonesUseCase = {
-      execute: jest.fn(),
+      execute: jest.fn().mockResolvedValue(mockPaginatedResponse),
     } as any;
 
     mockGetDistritosByCantonUseCase = {
@@ -26,25 +40,9 @@ describe('CantonController', () => {
 
   describe('findAll', () => {
     it('should return paginated cantones', async () => {
-      const mockResponse = {
-        status: ResponseStatus.SUCCESS,
-        message: ResponseMessages.CANTONES_FETCHED_SUCCESSFULLY,
-        data: [Canton.create(101, 1, 'San José')],
-        meta: {
-          totalItems: 1,
-          itemCount: 1,
-          itemsPerPage: 7,
-          totalPages: 1,
-          currentPage: 1,
-          timestamp: expect.any(String),
-        },
-      };
-
-      mockGetAllCantonesUseCase.execute.mockResolvedValue(mockResponse);
-
       const result = await controller.findAll();
 
-      expect(result).toEqual(mockResponse);
+      expect(result).toEqual(mockPaginatedResponse);
       expect(mockGetAllCantonesUseCase.execute).toHaveBeenCalledWith({
         page: 1,
         limit: 7,
@@ -52,8 +50,21 @@ describe('CantonController', () => {
     });
 
     it('should handle custom pagination parameters', async () => {
-      await controller.findAll(2, 5);
+      const customPaginatedResponse = {
+        ...mockPaginatedResponse,
+        meta: {
+          ...mockPaginatedResponse.meta,
+          itemsPerPage: 5,
+          currentPage: 2,
+        },
+      };
+      mockGetAllCantonesUseCase.execute.mockResolvedValueOnce(
+        customPaginatedResponse,
+      );
 
+      const result = await controller.findAll(2, 5);
+
+      expect(result).toEqual(customPaginatedResponse);
       expect(mockGetAllCantonesUseCase.execute).toHaveBeenCalledWith({
         page: 2,
         limit: 5,
