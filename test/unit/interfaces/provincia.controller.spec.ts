@@ -35,6 +35,7 @@ describe('ProvinciaController', () => {
     it('should return paginated provincias', async () => {
       const mockResponse = {
         status: ResponseStatus.SUCCESS,
+        statusCode: 200,
         message: ResponseMessages.PROVINCIAS_FETCHED_SUCCESSFULLY,
         data: [Provincia.create(1, 'San José')],
         meta: {
