@@ -15,3 +15,6 @@ export enum ResponseMessages {
   ROUTE_NOT_FOUND = 'The requested route was not found',
   INTERNAL_SERVER_ERROR = 'An internal server error occurred',
 }
+
+export const COSTA_RICA_FLAG_URL =
+  'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Flag_of_Costa_Rica.svg/1200px-Flag_of_Costa_Rica.svg.png';

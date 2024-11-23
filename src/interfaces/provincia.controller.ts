@@ -1,7 +1,7 @@
 import { GetAllProvinciasUseCase } from '@/application/get-all-provincias.usecase';
 import { GetCantonesByProvinciaUseCase } from '@/application/get-cantones-by-provincia.usecase';
 import { GetProvinciaByIdUseCase } from '@/application/get-provincia-by-id.usecase';
-import { ResponseMessages, ResponseStatus } from '@/utils/response-status.enum';
+import { ResponseMessages, ResponseStatus } from '@/constants';
 import { generateApiResponse } from '@/utils/response.util';
 import {
   Controller,

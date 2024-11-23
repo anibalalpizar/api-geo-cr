@@ -1,7 +1,7 @@
 import { GetAllDistritosUseCase } from '@/application/get-all-distritos.usecase';
+import { ResponseMessages, ResponseStatus } from '@/constants';
 import { Distrito } from '@/domain/entities/distrito.entity';
 import { DistritoRepository } from '@/domain/repositories';
-import { ResponseMessages, ResponseStatus } from '@/utils/response-status.enum';
 
 describe('GetAllDistritosUseCase', () => {
   let useCase: GetAllDistritosUseCase;

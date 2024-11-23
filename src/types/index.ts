@@ -1,7 +1,4 @@
-import type {
-  ResponseMessages,
-  ResponseStatus,
-} from '@/utils/response-status.enum';
+import type { ResponseMessages, ResponseStatus } from '@/constants';
 
 export interface Meta {
   totalItems: number;

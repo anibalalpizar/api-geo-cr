@@ -1,5 +1,5 @@
+import type { ResponseMessages, ResponseStatus } from '@/constants';
 import type { ApiResponse, Meta } from '@/types';
-import type { ResponseMessages, ResponseStatus } from './response-status.enum';
 
 export function generateApiResponse<T>(
   status: ResponseStatus,

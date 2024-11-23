@@ -1,9 +1,9 @@
 import { GetAllProvinciasUseCase } from '@/application/get-all-provincias.usecase';
 import { GetCantonesByProvinciaUseCase } from '@/application/get-cantones-by-provincia.usecase';
 import { GetProvinciaByIdUseCase } from '@/application/get-provincia-by-id.usecase';
+import { ResponseMessages, ResponseStatus } from '@/constants';
 import { Provincia } from '@/domain/entities';
 import { ProvinciaController } from '@/interfaces/provincia.controller';
-import { ResponseMessages, ResponseStatus } from '@/utils/response-status.enum';
 
 describe('ProvinciaController', () => {
   let controller: ProvinciaController;

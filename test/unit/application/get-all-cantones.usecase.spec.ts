@@ -1,7 +1,7 @@
 import { GetAllCantonesUseCase } from '@/application/get-all-cantones.usecase';
+import { ResponseMessages, ResponseStatus } from '@/constants';
 import { Canton } from '@/domain/entities';
 import { CantonRepository } from '@/domain/repositories';
-import { ResponseMessages, ResponseStatus } from '@/utils/response-status.enum';
 
 describe('GetAllCantonesUseCase', () => {
   let useCase: GetAllCantonesUseCase;

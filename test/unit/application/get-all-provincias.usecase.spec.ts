@@ -1,7 +1,7 @@
 import { GetAllProvinciasUseCase } from '@/application/get-all-provincias.usecase';
+import { ResponseMessages, ResponseStatus } from '@/constants';
 import { Provincia } from '@/domain/entities';
 import { ProvinciaRepository } from '@/domain/repositories';
-import { ResponseMessages, ResponseStatus } from '@/utils/response-status.enum';
 
 describe('GetAllProvinciasUseCase', () => {
   let useCase: GetAllProvinciasUseCase;

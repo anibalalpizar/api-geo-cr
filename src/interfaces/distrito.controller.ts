@@ -1,6 +1,6 @@
 import { GetAllDistritosUseCase } from '@/application/get-all-distritos.usecase';
 import { GetDistritoByIdUseCase } from '@/application/get-distrito-by-id.usecase';
-import { ResponseMessages, ResponseStatus } from '@/utils/response-status.enum';
+import { ResponseMessages, ResponseStatus } from '@/constants';
 import { generateApiResponse } from '@/utils/response.util';
 import {
   Controller,

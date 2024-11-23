@@ -1,6 +1,6 @@
+import { ResponseMessages, ResponseStatus } from '@/constants';
 import { ProvinciaRepository } from '@/domain/repositories';
 import type { Pagination } from '@/types';
-import { ResponseMessages, ResponseStatus } from '@/utils/response-status.enum';
 import { generateApiResponse } from '@/utils/response.util';
 import { Inject, Injectable } from '@nestjs/common';
 

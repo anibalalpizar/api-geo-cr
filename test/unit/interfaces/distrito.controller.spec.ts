@@ -1,8 +1,8 @@
 import { GetAllDistritosUseCase } from '@/application/get-all-distritos.usecase';
 import { GetDistritoByIdUseCase } from '@/application/get-distrito-by-id.usecase';
+import { ResponseMessages, ResponseStatus } from '@/constants';
 import { Distrito } from '@/domain/entities/distrito.entity';
 import { DistritoController } from '@/interfaces/distrito.controller';
-import { ResponseMessages, ResponseStatus } from '@/utils/response-status.enum';
 
 describe('DistritoController', () => {
   let controller: DistritoController;

@@ -1,4 +1,4 @@
-import { ResponseMessages, ResponseStatus } from '@/utils/response-status.enum';
+import { ResponseMessages, ResponseStatus } from '@/constants';
 import {
   ArgumentsHost,
   Catch,

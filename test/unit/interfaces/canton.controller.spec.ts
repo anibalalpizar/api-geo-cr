@@ -1,9 +1,9 @@
 import { GetAllCantonesUseCase } from '@/application/get-all-cantones.usecase';
 import { GetCantonByIdUseCase } from '@/application/get-canton-by-id.usecase';
 import { GetDistritosByCantonUseCase } from '@/application/get-distritos-by-canton.usecase';
+import { ResponseMessages, ResponseStatus } from '@/constants';
 import { Canton } from '@/domain/entities';
 import { CantonController } from '@/interfaces/canton.controller';
-import { ResponseMessages, ResponseStatus } from '@/utils/response-status.enum';
 
 describe('CantonController', () => {
   let controller: CantonController;
