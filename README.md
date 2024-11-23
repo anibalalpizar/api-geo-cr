@@ -121,8 +121,8 @@ GET /provincias?page=1&limit=2
 ### 📚 Documentation
 
 Full API documentation is available in Swagger UI:
-- Desarrollo: http://localhost:3000
-- Producción: [API Documentation](https://api-geo-cr.vercel.app/)
+- Development: http://localhost:3000
+- Production: [API Documentation](https://api-geo-cr.vercel.app/)
 
 ## 🏗️ Project Structure
 
