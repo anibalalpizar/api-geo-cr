@@ -1,8 +1,17 @@
 import { GetAllCantonesUseCase } from '@/application/get-all-cantones.usecase';
+import { GetCantonByIdUseCase } from '@/application/get-canton-by-id.usecase';
 import { GetDistritosByCantonUseCase } from '@/application/get-distritos-by-canton.usecase';
 import { ResponseMessages, ResponseStatus } from '@/utils/response-status.enum';
 import { generateApiResponse } from '@/utils/response.util';
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  NotFoundException,
+  Param,
+  Query,
+} from '@nestjs/common';
 import {
   ApiOperation,
   ApiParam,
@@ -16,10 +25,12 @@ import {
 export class CantonController {
   constructor(
     private readonly getAllCantonesUseCase: GetAllCantonesUseCase,
+    private readonly getCantonByIdUseCase: GetCantonByIdUseCase,
     private readonly getDistritosByCantonUseCase: GetDistritosByCantonUseCase,
   ) {}
 
   @Get()
+  @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Obtener todos los cantones' })
   @ApiQuery({
     name: 'page',
@@ -36,7 +47,7 @@ export class CantonController {
     example: 7,
   })
   @ApiResponse({
-    status: 200,
+    status: HttpStatus.OK,
     description: 'Lista de cantones obtenida exitosamente',
   })
   async findAll(@Query('page') page = 1, @Query('limit') limit = 7) {
@@ -53,7 +64,25 @@ export class CantonController {
     );
   }
 
+  @Get(':id')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Obtener un cantón por ID' })
+  @ApiParam({ name: 'id', type: Number, description: 'ID del cantón' })
+  @ApiResponse({ status: HttpStatus.OK, description: 'Cantón encontrado' })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: 'Cantón no encontrado',
+  })
+  async findById(@Param('id') id: string) {
+    const canton = await this.getCantonByIdUseCase.execute(Number(id));
+    if (!canton) {
+      throw new NotFoundException('Cantón no encontrado');
+    }
+    return canton;
+  }
+
   @Get(':id/distritos')
+  @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Obtener distritos de un cantón' })
   @ApiParam({ name: 'id', type: Number, description: 'ID del cantón' })
   @ApiQuery({
@@ -71,14 +100,23 @@ export class CantonController {
     example: 7,
   })
   @ApiResponse({
-    status: 200,
+    status: HttpStatus.OK,
     description: 'Lista de distritos obtenida exitosamente',
+  })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: 'Cantón no encontrado',
   })
   async findDistritosByCantonId(
     @Query('page') page = 1,
     @Query('limit') limit = 7,
     @Param('id') id: string,
   ) {
+    const canton = await this.getCantonByIdUseCase.execute(Number(id));
+    if (!canton) {
+      throw new NotFoundException('Cantón no encontrado');
+    }
+
     const pagination = { page: Number(page), limit: Number(limit) };
     const result = await this.getDistritosByCantonUseCase.execute(
       pagination,
