@@ -12,4 +12,6 @@ export enum ResponseMessages {
   CANTONES_BY_PROVINCIA_FETCHED_SUCCESSFULLY = 'Cantones by provincia fetched successfully',
   DISTRITOS_FETCHED_SUCCESSFULLY = 'Distritos fetched successfully',
   DISTRITOS_BY_CANTON_FETCHED_SUCCESSFULLY = 'Distritos by canton fetched successfully',
+  ROUTE_NOT_FOUND = 'The requested route was not found',
+  INTERNAL_SERVER_ERROR = 'An internal server error occurred',
 }
