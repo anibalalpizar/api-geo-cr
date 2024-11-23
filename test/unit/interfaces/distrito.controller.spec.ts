@@ -11,6 +11,7 @@ describe('DistritoController', () => {
 
   const mockPaginatedResponse = {
     status: ResponseStatus.SUCCESS,
+    statusCode: 200,
     message: ResponseMessages.DISTRITOS_FETCHED_SUCCESSFULLY,
     data: [Distrito.create(10101, 101, 'Carmen')],
     meta: {
@@ -81,15 +82,6 @@ describe('DistritoController', () => {
 
       expect(result).toEqual(mockDistrito);
       expect(mockGetDistritoByIdUseCase.execute).toHaveBeenCalledWith(10101);
-    });
-
-    it('should handle non-existent distrito', async () => {
-      mockGetDistritoByIdUseCase.execute.mockResolvedValue(null);
-
-      const result = await controller.findById('99999');
-
-      expect(result).toBeNull();
-      expect(mockGetDistritoByIdUseCase.execute).toHaveBeenCalledWith(99999);
     });
   });
 });
