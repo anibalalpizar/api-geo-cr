@@ -1,4 +1,5 @@
 import { GetAllCantonesUseCase } from '@/application/get-all-cantones.usecase';
+import { GetCantonByIdUseCase } from '@/application/get-canton-by-id.usecase';
 import { GetDistritosByCantonUseCase } from '@/application/get-distritos-by-canton.usecase';
 import { Canton } from '@/domain/entities';
 import { CantonController } from '@/interfaces/canton.controller';
@@ -7,10 +8,12 @@ import { ResponseMessages, ResponseStatus } from '@/utils/response-status.enum';
 describe('CantonController', () => {
   let controller: CantonController;
   let mockGetAllCantonesUseCase: jest.Mocked<GetAllCantonesUseCase>;
+  let mockGetCantonByIdUseCase: jest.Mocked<GetCantonByIdUseCase>;
   let mockGetDistritosByCantonUseCase: jest.Mocked<GetDistritosByCantonUseCase>;
 
   const mockPaginatedResponse = {
     status: ResponseStatus.SUCCESS,
+    statusCode: 200,
     message: ResponseMessages.CANTONES_FETCHED_SUCCESSFULLY,
     data: [Canton.create(101, 1, 'San José')],
     meta: {
@@ -28,12 +31,17 @@ describe('CantonController', () => {
       execute: jest.fn().mockResolvedValue(mockPaginatedResponse),
     } as any;
 
+    mockGetCantonByIdUseCase = {
+      execute: jest.fn(),
+    } as any;
+
     mockGetDistritosByCantonUseCase = {
       execute: jest.fn(),
     } as any;
 
     controller = new CantonController(
       mockGetAllCantonesUseCase,
+      mockGetCantonByIdUseCase,
       mockGetDistritosByCantonUseCase,
     );
   });
@@ -76,6 +84,7 @@ describe('CantonController', () => {
     it('should return distritos for a canton', async () => {
       const mockResponse = {
         status: ResponseStatus.SUCCESS,
+        statusCode: 200,
         message: ResponseMessages.DISTRITOS_BY_CANTON_FETCHED_SUCCESSFULLY,
         data: [],
         meta: {
@@ -88,6 +97,9 @@ describe('CantonController', () => {
         },
       };
 
+      mockGetCantonByIdUseCase.execute.mockResolvedValue(
+        Canton.create(101, 1, 'San José'),
+      );
       mockGetDistritosByCantonUseCase.execute.mockResolvedValue(mockResponse);
 
       const result = await controller.findDistritosByCantonId(1, 7, '101');
