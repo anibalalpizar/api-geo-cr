@@ -38,13 +38,25 @@ git clone https://github.com/anibalalpizar/api-geo-cr.git
 
 # Install dependencies
 npm install
+
+# Configure environment variables
+cp .env.example .env
 ```
+
+| Variable | Description | Possible Values | Default |
+|----------|-------------|------------------|-------------|
+| NODE_ENV | Execution environment | development, production, test | development |
+| PORT | Application port | Any valid port | 3000 |
+| SWAGGER_ENABLED | Enable/disable Swagger | true, false | true |
 
 ## 🚀 Execution
 
 ```bash
 # Development mode
 npm run start:dev
+
+# Debug mode
+npm run start:debug
 
 # Production mode
 npm run start:prod
@@ -109,7 +121,8 @@ GET /provincias?page=1&limit=2
 ### 📚 Documentation
 
 Full API documentation is available in Swagger UI:
-[Api Documentation](https://api-geo-cr.vercel.app/)
+- Desarrollo: http://localhost:3000
+- Producción: [API Documentation](https://api-geo-cr.vercel.app/)
 
 ## 🏗️ Project Structure
 
@@ -147,6 +160,7 @@ Contributions are welcome. Please follow these steps:
 3. Commit your changes (`git commit -m 'add some amazing feature'`)
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
+
 
 ## 🔑 License
 
