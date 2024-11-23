@@ -8,6 +8,7 @@ export function generateApiResponse<T>(
   currentPage: number,
   itemsPerPage: number,
   totalItems: number,
+  statusCode: number = 200,
 ): ApiResponse<T> {
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
@@ -22,6 +23,7 @@ export function generateApiResponse<T>(
 
   return {
     status,
+    statusCode,
     message,
     data,
     meta,
