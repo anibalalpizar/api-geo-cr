@@ -3,7 +3,15 @@ import { GetCantonesByProvinciaUseCase } from '@/application/get-cantones-by-pro
 import { GetProvinciaByIdUseCase } from '@/application/get-provincia-by-id.usecase';
 import { ResponseMessages, ResponseStatus } from '@/utils/response-status.enum';
 import { generateApiResponse } from '@/utils/response.util';
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  NotFoundException,
+  Param,
+  Query,
+} from '@nestjs/common';
 import {
   ApiOperation,
   ApiParam,
@@ -22,6 +30,7 @@ export class ProvinciaController {
   ) {}
 
   @Get()
+  @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Obtener todas las provincias' })
   @ApiQuery({
     name: 'page',
@@ -38,7 +47,7 @@ export class ProvinciaController {
     example: 7,
   })
   @ApiResponse({
-    status: 200,
+    status: HttpStatus.OK,
     description: 'Lista de provincias obtenida exitosamente',
   })
   async findAll(@Query('page') page = 1, @Query('limit') limit = 7) {
@@ -56,15 +65,24 @@ export class ProvinciaController {
   }
 
   @Get(':id')
+  @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Obtener una provincia por ID' })
   @ApiParam({ name: 'id', type: Number, description: 'ID de la provincia' })
-  @ApiResponse({ status: 200, description: 'Provincia encontrada' })
-  @ApiResponse({ status: 404, description: 'Provincia no encontrada' })
+  @ApiResponse({ status: HttpStatus.OK, description: 'Provincia encontrada' })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: 'Provincia no encontrada',
+  })
   async findById(@Param('id') id: string) {
-    return this.getProvinciaByIdUseCase.execute(Number(id));
+    const provincia = await this.getProvinciaByIdUseCase.execute(Number(id));
+    if (!provincia) {
+      throw new NotFoundException('Provincia no encontrada');
+    }
+    return provincia;
   }
 
   @Get(':id/cantones')
+  @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Obtener cantones de una provincia' })
   @ApiParam({ name: 'id', type: Number, description: 'ID de la provincia' })
   @ApiQuery({
@@ -82,14 +100,23 @@ export class ProvinciaController {
     example: 7,
   })
   @ApiResponse({
-    status: 200,
+    status: HttpStatus.OK,
     description: 'Lista de cantones obtenida exitosamente',
+  })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: 'Provincia no encontrada',
   })
   async findCantonesByProvinciaId(
     @Query('page') page = 1,
     @Query('limit') limit = 7,
     @Param('id') id: string,
   ) {
+    const provincia = await this.getProvinciaByIdUseCase.execute(Number(id));
+    if (!provincia) {
+      throw new NotFoundException('Provincia no encontrada');
+    }
+
     const pagination = { page: Number(page), limit: Number(limit) };
     const result = await this.getCantonesByProvinciaUseCase.execute(
       pagination,
