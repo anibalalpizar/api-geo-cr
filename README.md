@@ -96,6 +96,7 @@ GET /provincias?page=1&limit=2
 ```json
 {
   "status": "success",
+  "statusCode": 200,
   "message": "Provincias fetched successfully",
   "data": [
     {
@@ -113,7 +114,7 @@ GET /provincias?page=1&limit=2
     "itemsPerPage": 2,
     "totalPages": 4,
     "currentPage": 1,
-    "timestamp": "2024-11-22T23:03:01.448Z"
+    "timestamp": "2024-11-23T10:34:16.809Z"
   }
 }
 ```
