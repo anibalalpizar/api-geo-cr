@@ -28,6 +28,7 @@ describe('GetAllProvinciasUseCase', () => {
     const result = await useCase.execute({ page: 1, limit: 2 });
 
     expect(result.status).toBe(ResponseStatus.SUCCESS);
+    expect(result.statusCode).toBe(200);
     expect(result.message).toBe(
       ResponseMessages.PROVINCIAS_FETCHED_SUCCESSFULLY,
     );
@@ -48,6 +49,7 @@ describe('GetAllProvinciasUseCase', () => {
     const result = await useCase.execute({ page: 3, limit: 2 });
 
     expect(result.status).toBe(ResponseStatus.SUCCESS);
+    expect(result.statusCode).toBe(200);
     expect(result.data).toHaveLength(0);
     expect(result.meta.currentPage).toBe(3);
     expect(result.meta.totalPages).toBe(2);
