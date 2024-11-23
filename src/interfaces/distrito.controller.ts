@@ -2,7 +2,15 @@ import { GetAllDistritosUseCase } from '@/application/get-all-distritos.usecase'
 import { GetDistritoByIdUseCase } from '@/application/get-distrito-by-id.usecase';
 import { ResponseMessages, ResponseStatus } from '@/utils/response-status.enum';
 import { generateApiResponse } from '@/utils/response.util';
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  NotFoundException,
+  Param,
+  Query,
+} from '@nestjs/common';
 import {
   ApiOperation,
   ApiParam,
@@ -20,6 +28,7 @@ export class DistritoController {
   ) {}
 
   @Get()
+  @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Obtener todos los distritos' })
   @ApiQuery({
     name: 'page',
@@ -36,7 +45,7 @@ export class DistritoController {
     example: 7,
   })
   @ApiResponse({
-    status: 200,
+    status: HttpStatus.OK,
     description: 'Lista de distritos obtenida exitosamente',
   })
   async findAll(@Query('page') page = 1, @Query('limit') limit = 7) {
@@ -54,11 +63,19 @@ export class DistritoController {
   }
 
   @Get(':id')
+  @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Obtener un distrito por ID' })
   @ApiParam({ name: 'id', type: Number, description: 'ID del distrito' })
-  @ApiResponse({ status: 200, description: 'Distrito encontrado' })
-  @ApiResponse({ status: 404, description: 'Distrito no encontrado' })
+  @ApiResponse({ status: HttpStatus.OK, description: 'Distrito encontrado' })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: 'Distrito no encontrado',
+  })
   async findById(@Param('id') id: string) {
-    return this.getDistritoByIdUseCase.execute(Number(id));
+    const distrito = await this.getDistritoByIdUseCase.execute(Number(id));
+    if (!distrito) {
+      throw new NotFoundException('Distrito no encontrado');
+    }
+    return distrito;
   }
 }
