@@ -1,16 +1,22 @@
+import { AppModule } from '@/app.module';
+import { setupSwagger } from '@/config/swagger.config';
+import { HttpExceptionFilter } from '@/filters/http-exception.filter';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import { setupSwagger } from './config/swagger.config';
-import { HttpExceptionFilter } from './filters/http-exception.filter';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    cors: true,
+  });
+
   const configService = app.get(ConfigService);
 
-  app.useGlobalFilters(new HttpExceptionFilter());
+  app.use((req, res, next) => {
+    res.header('X-Robots-Tag', 'index, follow');
+    next();
+  });
 
-  app.enableCors();
+  app.useGlobalFilters(new HttpExceptionFilter());
 
   if (configService.get('config.swaggerEnabled')) {
     setupSwagger(app);
@@ -20,7 +26,7 @@ async function bootstrap() {
   await app.listen(port);
 
   console.log(`
-🚀 Geo CR API is running on: http://localhost:${port}
+🚀 API Geo CR is running on: http://localhost:${port}
 📚 Documentation available at: http://localhost:${port}
 🌍 Environment: ${configService.get('config.nodeEnv')}
   `);
