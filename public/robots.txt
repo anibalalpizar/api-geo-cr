@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://api-geo-cr.vercel.app/sitemap.xml
